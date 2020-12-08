@@ -1,7 +1,8 @@
-# LSTM for international airline passengers problem with regression framing
+# Verification of Results from Network Capacity Predictor
 import numpy
 import pandas as pd
 import numpy as np
+import math
 # convert an array of values into a dataset matrix
 
 
@@ -81,7 +82,18 @@ print("AND PEAK VALLEY MISMATCH", congestion_err)
 print("AND VALLEY PEAK MATCH", uncongestion_err)
 
 df2 = pd.DataFrame({'NETWORK_AT_PEAK': congested_nw, 'NETWORK_AT_VALLEY': uncongested_nw, 'PEAK_VALLEY_ERROR': congestion_err, 'VALLEY_PEAK_ERROR': uncongestion_err})
-df2.plot(kind='bar', stacked=True, figsize=(8, 6))
+ax = df2.plot(kind='bar', stacked=True, figsize=(8, 6))
+
+annonation_labels = [congested_nw, uncongested_nw, congestion_err, uncongestion_err]
+count = 0
+# Add this loop to add the annotations
+for p in ax.patches:
+    width = p.get_width()
+    height = p.get_height()
+    x, y = p.get_xy()
+    ax.annotate(str(round(p.get_y() + height + 0.01, 2)) + "%-(" + str(round(annonation_labels[count][0], 2)) + "%)", (p.get_x() + .5 * width, p.get_y() + height + 0.01), ha='center', fontsize=6)
+    count = count + 1
+
 plt.xticks(rotation=30)
 plt.ylabel("Number Records - Actual vs Predicted Match/Mismatch", fontsize=10, labelpad=12)
 plt.xlabel("Congestion Summary", fontsize=10, labelpad=12)
@@ -101,7 +113,21 @@ print("OR PEAK VALLEY MISMATCH", congestion_err)
 print("OR VALLEY PEAK MATCH", uncongestion_err)
 
 df2 = pd.DataFrame({'NETWORK_AT_PEAK': congested_nw, 'NETWORK_AT_VALLEY': uncongested_nw, 'PEAK_VALLEY_ERROR': congestion_err, 'VALLEY_PEAK_ERROR': uncongestion_err})
-df2.plot(kind='bar', stacked=True, figsize=(8, 6))
+ax = df2.plot(kind='bar', stacked=True, figsize=(8, 6))
+
+
+annonation_labels = [congested_nw, uncongested_nw, congestion_err, uncongestion_err]
+
+# Add this loop to add the annotations
+count = 0
+for p in ax.patches:
+    width = p.get_width()
+    height = p.get_height()
+    x, y = p.get_xy()
+    ax.annotate(str(round(p.get_y() + height + 0.01, 2)) + "%-(" + str(round(annonation_labels[count][0], 2)) + "%)", (p.get_x() + .5 * width, p.get_y() + height + 0.01), ha='center', fontsize=6)
+    count = count + 1
+
+
 plt.xticks(rotation=30)
 plt.ylabel("Number Records - Actual vs Predicted Match/Mismatch", fontsize=10, labelpad=12)
 plt.xlabel("Congestion Summary", fontsize=10, labelpad=12)

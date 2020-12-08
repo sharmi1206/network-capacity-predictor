@@ -1,4 +1,4 @@
-# LSTM for international airline passengers problem with regression framing
+# LSTM to Train and Test Network Capacity of a cell
 import numpy
 import pandas as pd
 import csv
